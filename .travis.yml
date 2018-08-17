@@ -1,0 +1,10 @@
+language: node_js
+node_js:
+  - "10"
+# command to install dependencies
+install:
+  - npm install
+# command to run tests and linter
+script:
+  - echo "no tests!"
+  - npm run lint

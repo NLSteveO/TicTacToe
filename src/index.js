@@ -1,3 +1,13 @@
+/* eslint-disable
+  react/require-optimization,
+  react/prefer-stateless-function,
+  react/button-has-type,
+  react/no-multi-comp,
+  class-methods-use-this,
+  node/no-unsupported-features,
+  no-warning-comments,
+  no-unused-vars
+*/
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
