@@ -1,11 +1,15 @@
 /* eslint-disable
   react/require-optimization,
   react/prefer-stateless-function,
+  react/prop-types,
   react/button-has-type,
+  react/no-access-state-in-setstate,
   react/no-multi-comp,
+  react/no-unused-state,
   react/jsx-no-bind,
   class-methods-use-this,
   node/no-unsupported-features,
+  object-shorthand,
   no-warning-comments,
   no-unused-vars
 */
@@ -25,17 +29,35 @@ class Square extends React.Component {
     return (
       <button
         className="square"
-        onClick={() => this.setState({value: 'X'})}
+        onClick={() => this.props.onClick()}
       >
-        {this.state.value}
+        {this.props.value}
       </button>
     );
   }
 }
 
 class Board extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      squares: Array(9).fill(null),
+    };
+  }
+
+  handleClick(i) {
+    const squares = this.state.squares.slice();
+    squares[i] = 'X';
+    this.setState({squares: squares});
+  }
+
   renderSquare(i) {
-    return <Square value={i} />;
+    return (
+      <Square
+        value={this.state.squares[i]}
+        onClick={() => this.handleClick(i)}
+      />
+    );
   }
 
   render() {
@@ -86,4 +108,3 @@ ReactDOM.render(
   <Game />,
   document.getElementById('root')
 );
-
