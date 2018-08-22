@@ -28,6 +28,7 @@ I will add tests at a later time.
 I am using [Travis CI](https://travis-ci.org) for Continuous Integration.
 
 ## What's New
+- **2018-08-22:** Lifted State Up Again, Showed Past Moves, and Implemented Time Travel.
 - **2018-08-20:** Lifted State Up, Made a Functional Component, Added Turns, and Added Declaring a Winner.
 - **2018-08-18:** Passed some data through props and Made an interactive component.
 - **2018-08-16:** Created repository with License and README. Setup the base react app for the Tutorial, added ESLint, and Travis CI. config
