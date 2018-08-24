@@ -4,8 +4,8 @@ module.exports = {
   root: true,
   extends: [
     'mitmaro',
+    'mitmaro/config/babel',
     'mitmaro/config/ecmascript-9',
-    'mitmaro/config/node',
     'mitmaro/config/react'
   ],
   parserOptions: {
@@ -37,6 +37,6 @@ module.exports = {
         maxBOF: 0,
         maxEOF: 1
       }
-    ]
+    ],
   }
 }

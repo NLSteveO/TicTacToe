@@ -1,20 +1,8 @@
 /* eslint-disable
-  react/require-optimization,
-  react/prefer-stateless-function,
   react/prop-types,
-  react/button-has-type,
-  react/no-access-state-in-setstate,
   react/no-multi-comp,
-  react/no-unused-state,
   react/jsx-no-bind,
-  react/no-array-index-key,
-  class-methods-use-this,
-  node/no-unsupported-features,
-  object-shorthand,
-  prefer-template,
   no-use-before-define,
-  no-warning-comments,
-  no-unused-vars
 */
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -26,6 +14,7 @@ function Square(props) {
     : 'square';
   return (
     <button
+      type="button"
       className={className}
       onClick={props.onClick}
     >
@@ -96,15 +85,15 @@ class Game extends React.Component {
     const row = Math.floor(i / 3) + 1;
     const column = i % 3 + 1;
     squares[i] = this.state.xIsNext ? 'X' : 'O';
-    this.setState({
+    this.setState((prevState) => ({
       history: history.concat([{
-        squares: squares,
-        column: column,
-        row: row,
+        squares,
+        column,
+        row,
       }]),
       stepNumber: history.length,
-      xIsNext: !this.state.xIsNext,
-    });
+      xIsNext: !prevState.xIsNext,
+    }));
   }
 
   jumpTo(step) {
@@ -115,9 +104,9 @@ class Game extends React.Component {
   }
 
   reverseMoves() {
-    this.setState({
-      reverse: !this.state.reverse,
-    });
+    this.setState((prevState) => ({
+      reverse: !prevState.reverse,
+    }));
   }
 
   render() {
@@ -126,17 +115,18 @@ class Game extends React.Component {
     const winner = calculateWinner(current.squares);
 
     let moves = history.map((step, move) => {
-      const position = '(' + step.column + ', ' + step.row + ')';
+      const position = `(${step.column}, ${step.row})`;
       const bold = move === this.state.stepNumber;
       const desc = move
-        ? 'Go to move #' + move + ' ' + position
+        ? `Go to move #${move} ${position}`
         : 'Go to game start';
       const text = bold
         ? <strong>{desc}</strong>
         : desc;
+      const key = `${step.column}-${step.row}`;
       return (
-        <li key={move}>
-          <button onClick={() => this.jumpTo(move)}>{text}</button>
+        <li key={key}>
+          <button type="button" onClick={() => this.jumpTo(move)}>{text}</button>
         </li>
       );
     });
@@ -144,17 +134,17 @@ class Game extends React.Component {
     if (this.state.reverse) {
       moves = moves.reverse();
     }
-    const reverseButton = <button onClick={() => this.reverseMoves()}>Reverse Order</button>;
+    const reverseButton = <button type="button" onClick={() => this.reverseMoves()}>Reverse Order</button>;
 
     let status;
     if (winner) {
-      status = 'Winner: ' + current.squares[winner[0]];
+      status = `Winner: ${current.squares[winner[0]]}`;
     }
     else if (!winner && this.state.stepNumber === 9) {
       status = <strong>TIE!!!</strong>;
     }
     else {
-      status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
+      status = `Next player: ${(this.state.xIsNext ? 'X' : 'O')}`;
     }
 
     return (
