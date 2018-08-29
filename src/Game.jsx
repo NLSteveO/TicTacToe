@@ -1,5 +1,4 @@
 /* eslint-disable
-  react/prop-types,
   react/jsx-no-bind,
   no-use-before-define,
 */

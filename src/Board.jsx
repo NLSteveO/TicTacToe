@@ -1,7 +1,7 @@
 /* eslint-disable
-  react/prop-types,
   react/jsx-no-bind,
 */
+import PropTypes from 'prop-types';
 import React from 'react';
 import Square from './Square.jsx';
 
@@ -43,4 +43,12 @@ class Board extends React.Component {
   }
 }
 
+Board.propTypes = {
+  onClick: PropTypes.func.isRequired,
+  squares: PropTypes.arrayOf(PropTypes.string).isRequired,
+  winner: PropTypes.arrayOf(PropTypes.number),
+};
+Board.defaultProps = {
+  winner: false,
+};
 export default Board;
