@@ -14,6 +14,7 @@ class Board extends React.Component {
       : false;
     return (
       <Square
+        key={i}
         winner={winner}
         value={this.props.squares[i]}
         index={i}
