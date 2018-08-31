@@ -9,6 +9,7 @@ function Square(props) {
     <button
       type="button"
       className={className}
+      data-index={props.index}
       onClick={props.onClick}
     >
       {props.value}
@@ -17,6 +18,7 @@ function Square(props) {
 }
 
 Square.propTypes = {
+  index: PropTypes.number.isRequired,
   onClick: PropTypes.func.isRequired,
   value: PropTypes.string,
   winner: PropTypes.bool.isRequired,

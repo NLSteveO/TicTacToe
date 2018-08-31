@@ -1,11 +1,13 @@
-/* eslint-disable
-  react/jsx-no-bind,
-*/
 import PropTypes from 'prop-types';
 import React from 'react';
 import Square from './Square.jsx';
 
 class Board extends React.Component {
+  handleClick = (e) => {
+    const index = Number(e.target.dataset.index);
+    this.props.onClick(index);
+  };
+
   renderSquare(i) {
     const winner = this.props.winner
       ? this.props.winner.indexOf(i) !== -1
@@ -14,7 +16,8 @@ class Board extends React.Component {
       <Square
         winner={winner}
         value={this.props.squares[i]}
-        onClick={() => this.props.onClick(i)}
+        index={i}
+        onClick={this.handleClick}
       />
     );
   }
