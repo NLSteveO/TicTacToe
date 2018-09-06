@@ -7,6 +7,8 @@ class Game extends React.Component {
     this.state = {
       history: [{
         squares: Array(9).fill(null),
+        column: 0,
+        row: 0,
       }],
       reverse: false,
       stepNumber: 0,
@@ -37,7 +39,7 @@ class Game extends React.Component {
   };
 
   jumpTo = (e) => {
-    const step = Number(e.target.dataset.move);
+    const step = Number(e.currentTarget.dataset.move);
     this.setState({
       stepNumber: step,
       xIsNext: (step % 2) === 0,
