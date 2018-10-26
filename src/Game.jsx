@@ -1,5 +1,6 @@
 import React from 'react';
 import Board from './Board.jsx';
+import isEqual from 'lodash.isequal';
 
 class Game extends React.Component {
   constructor(props) {
@@ -12,15 +13,65 @@ class Game extends React.Component {
       }],
       reverse: false,
       stepNumber: 0,
+      winner: null,
       xIsNext: true,
     };
   }
 
-  handleClick = (i) => {
+  componentDidUpdate(prevProps, prevState) {
+    const winner = this.calculateWinner(this.state.stepNumber);
+    if (!isEqual(prevState.winner, winner)) {
+      this.setState(() => ({
+        winner,
+      }));
+    }
+    if (!this.state.xIsNext && !winner && !this.state.paused) {
+      this.computersTurn();
+    }
+  }
+
+  computersTurn() {
     const history = this.state.history.slice(0, this.state.stepNumber + 1);
     const current = history[history.length - 1];
     const squares = current.squares.slice();
-    if (this.calculateWinner(this.state.stepNumber) || squares[i]) {
+    const winner = this.state.winner;
+    if (winner || (!winner && this.state.stepNumber === 9)) {
+      return;
+    }
+    const emptySquares = [];
+    squares.forEach((square, index) => {
+      if (!square) {
+        emptySquares.push(index);
+      }
+    });
+    const randomNum = Math.floor(Math.random() * Math.floor(emptySquares.length));
+    const computersSquare = emptySquares[randomNum];
+
+    const row = Math.floor(computersSquare / 3) + 1;
+    const column = computersSquare % 3 + 1;
+    squares[computersSquare] = this.state.xIsNext ? 'X' : 'O';
+    setTimeout(() => this.setState((prevState) => {
+      const previousHistory = prevState.history.slice(0, prevState.stepNumber + 1);
+      return {
+        history: previousHistory.concat([{
+          squares,
+          column,
+          row,
+        }]),
+        stepNumber: previousHistory.length,
+        xIsNext: !prevState.xIsNext,
+      };
+    }), 500);
+  }
+
+  handleClick = (i) => {
+    if (!this.state.xIsNext) {
+      return;
+    }
+    const history = this.state.history.slice(0, this.state.stepNumber + 1);
+    const current = history[history.length - 1];
+    const squares = current.squares.slice();
+    if (this.state.winner || squares[i]) {
       return;
     }
 
@@ -39,8 +90,16 @@ class Game extends React.Component {
   };
 
   jumpTo = (e) => {
+    if (
+      (!this.state.xIsNext && !this.state.winner)
+      && !(this.state.stepNumber < (this.state.history.length - 1))
+      && !(!this.state.winner && this.state.stepNumber === 9)
+    ) {
+      return;
+    }
     const step = Number(e.currentTarget.dataset.move);
     this.setState({
+      paused: true,
       stepNumber: step,
       xIsNext: (step % 2) === 0,
     });
@@ -49,6 +108,12 @@ class Game extends React.Component {
   reverseMoves = () => {
     this.setState((prevState) => ({
       reverse: !prevState.reverse,
+    }));
+  };
+
+  pauseComputer = () => {
+    this.setState((prevState) => ({
+      paused: !prevState.paused,
     }));
   };
 
@@ -78,7 +143,7 @@ class Game extends React.Component {
   render() {
     const history = this.state.history;
     const current = history[this.state.stepNumber];
-    const winner = this.calculateWinner(this.state.stepNumber);
+    const winner = this.state.winner;
 
     let moves = history.map((step, move) => {
       const position = `(${step.column}, ${step.row})`;
@@ -101,6 +166,11 @@ class Game extends React.Component {
       moves = moves.reverse();
     }
     const reverseButton = <button type="button" onClick={this.reverseMoves}>Reverse Order</button>;
+    const pauseButton = (
+      <button type="button" onClick={this.pauseComputer}>
+        {this.state.paused ? 'Continue' : 'Pause'}
+      </button>
+    );
 
     let status;
     if (winner) {
@@ -126,6 +196,7 @@ class Game extends React.Component {
           <div>{status}</div>
           <div>{reverseButton}</div>
           <ol>{moves}</ol>
+          <div>{pauseButton}</div>
         </div>
       </div>
     );

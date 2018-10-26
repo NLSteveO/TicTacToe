@@ -7,6 +7,7 @@
   "author": "Steve O'Keefe <steveokeefe88@gmail.com>",
   "private": true,
   "dependencies": {
+    "lodash.isequal": "^4.5.0",
     "prop-types": "^15.6.2",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",

@@ -30,6 +30,7 @@ module.exports = {
       'error',
       2,
     ],
+    'react/no-did-update-set-state': 'off',
     'no-multiple-empty-lines': [
       'error',
       {
