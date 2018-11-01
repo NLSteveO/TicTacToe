@@ -28,6 +28,7 @@ I will add tests at a later time.
 I am using [Travis CI](https://travis-ci.org) for Continuous Integration.
 
 ## What's New
+- **2018-11-01:** Added a computer player that picks an empty square at random.
 - **2018-09-03:** Fixed any some disabled eslint rules, split component classes into their own files, added propTypes validation, finished fixing disabled eslint rules, and gave square components unique keys.
 - **2018-08-23:** Added move location to move list, Bolded current move in list, Replaced hardcoding with two loops for creating the board squares, Added button to reverse order of moves list, Now highlights the winning squares, and Displays tie when no one wins.
 - **2018-08-22:** Lifted State Up Again, Showed Past Moves, and Implemented Time Travel.

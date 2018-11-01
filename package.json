@@ -1,12 +1,13 @@
 {
   "name": "TicTacToe",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "This is a simple in browser implementation of Tic-Tac-Toe, written using JavaScript and ReactJS.",
   "homepage": "http://steveokeefe.ca/TicTacToe",
   "license": "MIT",
   "author": "Steve O'Keefe <steveokeefe88@gmail.com>",
   "private": true,
   "dependencies": {
+    "lodash.isequal": "^4.5.0",
     "prop-types": "^15.6.2",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",

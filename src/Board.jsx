@@ -4,7 +4,7 @@ import Square from './Square.jsx';
 
 class Board extends React.Component {
   handleClick = (e) => {
-    const index = Number(e.target.dataset.index);
+    const index = Number(e.currentTarget.dataset.index);
     this.props.onClick(index);
   };
 
