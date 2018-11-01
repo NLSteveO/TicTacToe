@@ -1,6 +1,6 @@
 {
   "name": "TicTacToe",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "This is a simple in browser implementation of Tic-Tac-Toe, written using JavaScript and ReactJS.",
   "homepage": "http://steveokeefe.ca/TicTacToe",
   "license": "MIT",
