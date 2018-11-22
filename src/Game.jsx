@@ -1,10 +1,16 @@
 import React from 'react';
 import Board from './Board.jsx';
+import EasyAI from './ComputerAIs/EasyAI';
+import HardAI from './ComputerAIs/HardAI';
 import isEqual from 'lodash.isequal';
 
 class Game extends React.Component {
   constructor(props) {
     super(props);
+
+    this._easyAI = new EasyAI();
+    this._hardAI = new HardAI();
+
     this.state = {
       history: [{
         squares: Array(9).fill(null),
@@ -15,6 +21,7 @@ class Game extends React.Component {
       stepNumber: 0,
       winner: null,
       xIsNext: true,
+      computerPlayer: this._hardAI
     };
   }
 
@@ -38,14 +45,8 @@ class Game extends React.Component {
     if (winner || (!winner && this.state.stepNumber === 9)) {
       return;
     }
-    const emptySquares = [];
-    squares.forEach((square, index) => {
-      if (!square) {
-        emptySquares.push(index);
-      }
-    });
-    const randomNum = Math.floor(Math.random() * Math.floor(emptySquares.length));
-    const computersSquare = emptySquares[randomNum];
+
+    const computersSquare = this.state.computerPlayer.getMove(squares);
 
     const row = Math.floor(computersSquare / 3) + 1;
     const column = computersSquare % 3 + 1;

@@ -1,0 +1,13 @@
+check for winning move
+check for centre
+
+assuming first is corner
+first in centre
+edge unless blocking
+try to win if possible
+
+assuming first is centre
+first is corner
+keep blocking unless can win
+
+assuming first is edge
